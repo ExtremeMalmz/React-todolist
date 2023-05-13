@@ -1,7 +1,9 @@
-//import React, {useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 
 function App() {
+  const[movies, setMovies] = useState([]);
+  
   //this is where the REAL JS code is
   
   //checks if input is correct
@@ -33,11 +35,26 @@ function App() {
   function addItem(){
     var areInputsValid = check_if_input_is_correct();
 
+    var movieTitle = document.getElementById("inputTitle").value;
+    var movieScore = document.getElementById("betyg-menu").value;
+
     if(areInputsValid){
-      console.log("we gon add em");
+      //console.log("we gon add em");
+
+      
+      const movie = {
+        id: Math.floor(Math.random() * 1000000000),
+        title: movieTitle,
+        score: movieScore
+      }
+
+      setMovies(movies => [...movies,movie]);
+
+      console.log(movie.score);
     }
     else if(!areInputsValid){
-      console.log("yell at the user");
+      //console.log("inputs are wrong");
+      alert("The inputs are not correct!");
     }
     else{
       console.log("How did we end up here?")
@@ -67,7 +84,14 @@ function App() {
       <br></br>
       <button onClick={doThisStuff => addItem()}>Adda din film!</button>
 
-      <ul></ul>
+      <ul>
+        {movies.map(movie => {
+          return(
+            <li key ={movie.id}>{movie.title}  {movie.score} <img src = "images/delete.png" alt = "Delete img"></img></li>
+            )
+        })}
+      </ul>
+
     </div>
   );
 }
