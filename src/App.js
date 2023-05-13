@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
+import deleteImage from './images/delete.png';
+import starImage from './images/star.png';
 import './App.css';
 
+
 function App() {
+  //create the movie list array 
   const[movies, setMovies] = useState([]);
-  
-  //this is where the REAL JS code is
-  
+
   //checks if input is correct
   function check_if_input_is_correct(){
     //movie title from the input
@@ -31,34 +33,48 @@ function App() {
     }
   }
 
+  //adds the movie to the movieList
+  function addToMovieToMoveList(){
+    var movieTitle = document.getElementById("inputTitle").value;
+    var movieScore = document.getElementById("betyg-menu").value;
+
+    //write down movieScore score (number like 1) and then make it an image which repeats that number
+    var movieScoreImg = Array.from({ length: movieScore }, (_, index) => (
+      <img key = {index} src={starImage} alt="Movie Score Star" />
+    ));
+
+    const movie = {
+      id: Math.floor(Math.random() * 1000000000),
+      title: movieTitle,
+      score: movieScoreImg,
+    }
+
+    setMovies(movies => [...movies,movie]);
+
+    //console.log("prints out whats in the movies array");
+    //console.log(movies);
+  }
+
   //adds an item
   function addItem(){
     var areInputsValid = check_if_input_is_correct();
 
-    var movieTitle = document.getElementById("inputTitle").value;
-    var movieScore = document.getElementById("betyg-menu").value;
-
     if(areInputsValid){
-      //console.log("we gon add em");
-
-      
-      const movie = {
-        id: Math.floor(Math.random() * 1000000000),
-        title: movieTitle,
-        score: movieScore
-      }
-
-      setMovies(movies => [...movies,movie]);
-
-      console.log(movie.score);
+      addToMovieToMoveList();
     }
     else if(!areInputsValid){
-      //console.log("inputs are wrong");
       alert("The inputs are not correct!");
     }
     else{
       console.log("How did we end up here?")
     }
+  }
+
+  function deleteMovie(movieId){
+    //checks the list
+    const newMovieArray = movies.filter(movie => movie.id !== movieId);
+    //console.log(newMovieArray);
+    setMovies(newMovieArray);
   }
 
   //this the HTML 
@@ -74,11 +90,11 @@ function App() {
       <p>Betyg:</p>
       <select id="betyg-menu">
         <option value="option0">Välj ett betyg</option>
-        <option value="option1">1 stjärna</option>
-        <option value="option2">2 stjärna</option>
-        <option value="option3">3 stjärna</option>
-        <option value="option4">4 stjärna</option>
-        <option value="option5">5 stjärna</option>
+        <option value="1">1 stjärna</option>
+        <option value="2">2 stjärna</option>
+        <option value="3">3 stjärna</option>
+        <option value="4">4 stjärna</option>
+        <option value="5">5 stjärna</option>
       </select>
 
       <br></br>
@@ -87,10 +103,11 @@ function App() {
       <ul>
         {movies.map(movie => {
           return(
-            <li key ={movie.id}>{movie.title}  {movie.score} <img src = "images/delete.png" alt = "Delete img"></img></li>
+            <li key ={movie.id}>{movie.title}  {movie.score} <img src = {deleteImage} alt = "delete img" onClick={doThisStuffAswell => deleteMovie(movie.id)}></img></li>
             )
         })}
       </ul>
+
 
     </div>
   );
