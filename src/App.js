@@ -46,7 +46,8 @@ function App() {
     const movie = {
       id: Math.floor(Math.random() * 1000000000),
       title: movieTitle,
-      score: movieScoreImg,
+      scoreNum: movieScore,
+      scoreImg: movieScoreImg,
     }
 
     setMovies(movies => [...movies,movie]);
@@ -61,6 +62,10 @@ function App() {
 
     if(areInputsValid){
       addToMovieToMoveList();
+
+      //reset the form
+      document.getElementById("inputTitle").value = "";
+      document.getElementById("betyg-menu").selectedIndex = 0;
     }
     else if(!areInputsValid){
       alert("The inputs are not correct!");
@@ -75,6 +80,27 @@ function App() {
     const newMovieArray = movies.filter(movie => movie.id !== movieId);
     //console.log(newMovieArray);
     setMovies(newMovieArray);
+  }
+
+  function sortAlphabetically(){
+    //sorts by the titles alphabetically A-Z 
+
+    //console.log("SORTING ALPHABETICALLY!")
+    //console.log(movies)
+
+    const sortedMovies = [...movies].sort((a, b) =>
+    a.title.localeCompare(b.title)
+  );
+  setMovies(sortedMovies);
+  }
+
+  function sortByRanking(){
+    //sorts by the movie score
+
+    const sortedMovies = [...movies].sort((a, b) =>
+    a.scoreNum.localeCompare(b.scoreNum)
+  );
+  setMovies(sortedMovies);
   }
 
   //this the HTML 
@@ -103,11 +129,13 @@ function App() {
       <ul>
         {movies.map(movie => {
           return(
-            <li key ={movie.id}>{movie.title}  {movie.score} <img src = {deleteImage} alt = "delete img" onClick={doThisStuffAswell => deleteMovie(movie.id)}></img></li>
+            <li key ={movie.id}>{movie.title}  {movie.scoreImg} <img src = {deleteImage} alt = "delete img" onClick={doThisStuffAswell => deleteMovie(movie.id)}></img></li>
             )
         })}
       </ul>
 
+      <button onClick={doThisStuffAswell2 => sortAlphabetically()}>Alfabetiskt Ordning</button>
+      <button onClick={doThisStuffAswell => sortByRanking()}>Betygs Ordning</button>
 
     </div>
   );
