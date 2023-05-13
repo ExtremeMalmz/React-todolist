@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Erics ToDo List</h1>
+      <h2>Lägg till en film</h2>
+      <hr></hr>
+
+      <p>Titel:</p>
+      <input type ="text" placeholder = "Lägg till titel"></input>
+
+      <p>Betyg:</p>
+      <select id="betyg-menu">
+        <option value="option0">Välj ett betyg</option>
+        <option value="option1">1 stjärna</option>
+        <option value="option2">2 stjärna</option>
+        <option value="option3">3 stjärna</option>
+        <option value="option4">4 stjärna</option>
+        <option value="option5">5 stjärna</option>
+      </select>
+
+      <br></br>
+      <button>Adda din film!</button>
+
     </div>
   );
 }
